@@ -3,12 +3,13 @@ import { useState } from "react";
 
 const steps = Array.from({ length: 6 }, (_, i) => i);
 
-function App() {
+const PaginationBtn = () => {
   const [currentStep, setCurrentStep] = useState(1);
 
   const nextStep = () => {
     setCurrentStep(Math.min(currentStep + 1, steps.length));
   };
+
   const prevStep = () => {
     setCurrentStep(Math.max(currentStep - 1, 1));
   };
@@ -81,6 +82,5 @@ function App() {
       </div>
     </div>
   );
-}
-
-export default App;
+};
+export default PaginationBtn;
