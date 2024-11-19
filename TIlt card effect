@@ -1,0 +1,45 @@
+'use client'
+
+import React, { useState } from 'react'
+import { Card, CardContent } from "@/components/ui/card"
+
+export default function Component() {
+  const [rotation, setRotation] = useState({ x: 0, y: 0 })
+
+  const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
+    const card = event.currentTarget
+    const rect = card.getBoundingClientRect()
+    const x = event.clientX - rect.left
+    const y = event.clientY - rect.top
+    
+    const centerX = rect.width / 2
+    const centerY = rect.height / 2
+    
+    const rotateX = (y - centerY) / 10
+    const rotateY = -(x - centerX) / 10
+
+    setRotation({ x: rotateX, y: rotateY })
+  }
+
+  const handleMouseLeave = () => {
+    setRotation({ x: 0, y: 0 })
+  }
+
+  return (
+    <div className="flex items-center justify-center h-screen bg-gray-100">
+      <Card 
+        className="w-64 h-64 transition-transform duration-200 ease-out cursor-pointer"
+        style={{
+          transform: `perspective(1000px) rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)`,
+          transition: 'transform 0.1s'
+        }}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+      >
+        <CardContent className="flex items-center justify-center h-full">
+          <h2 className="text-2xl font-bold">Hover me!</h2>
+        </CardContent>
+      </Card>
+    </div>
+  )
+}
